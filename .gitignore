@@ -13,3 +13,9 @@ media
 
 # Virtual environment
 .venv
+
+.env
+
+node_modules
+
+.idea

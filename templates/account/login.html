@@ -1,4 +1,6 @@
 {% extends '_base.html' %}
+
+{% load socialaccount %}
 {% load crispy_forms_tags %}
 
 {% block title %}Log in{% endblock %}
@@ -10,4 +12,41 @@
   {{ form|crispy }}
   <button class="btn btn-success" type="submit">Log in</button>
 </form>
+<div class="container">
+    {% if request.session.user_data %}
+    <div>
+        <p>Hi {{ request.session.user_data.given_name }} 🙂</p>
+        <p>Your email is {{ request.session.user_data.email }}</p>
+        <img src="{{ request.session.user_data.picture }}" alt="User picture">
+        <p>Click here to <a href="/sign-out">Sign out</a></p>
+    </div>
+    {% else %}
+    <div>
+        <p>Hi there 🙂 </p>
+        <p>Click below to sign in with Google</p>
+
+<div id="g_id_onload"
+     data-client_id="53666372346-ifc4h0m8i2714k3v59ujms5aunh0vsd3.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-login_uri="{% url 'google_login_by_token' %}">
+     data-auto_prompt="false">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>
+    </div>
+    {% endif %}
+
+    <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
+</div>
+
+
+
 {% endblock content %}
